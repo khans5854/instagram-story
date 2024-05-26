@@ -21,6 +21,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
     profileUrl,
 }) => {
     const { handleClose } = useStory();
+
     return (
         <section className="flex flex-row justify-between py-2 px-4 w-[100vw]">
             <div className="flex flex-row gap-4">

@@ -61,10 +61,12 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
     children,
 }) => {
     const [open, setOpen] = useState<number>(-1);
+
     const [currentStoryIdx, setCurrentStoryIdx] = useState<number>(0);
 
     const [currentStroyLoaded, setCurrentStoryLoaded] =
         useState<boolean>(false);
+
     /**
      * Opens the story at the specified index.
      * @param idx - The index of the story to open.
@@ -132,12 +134,17 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
         }
     }, [currentStoryIdx, setOpen, setCurrentStoryIdx, open, storyItem.users]);
 
-
+    /**
+     * Callback function that is called when the image is loaded.
+     * It sets the currentStoryLoaded state to true, indicating that the current story image has been loaded.
+     */
     const handleImageLoad = useCallback(() => {
         setCurrentStoryLoaded(true);
     }, []);
 
-
+    /**
+     * Resets the currentStoryLoaded state to false whenever the currentUser or currentStoryIdx changes.
+     */
     useEffect(
         () => setCurrentStoryLoaded(false),
         [currentUser, currentStoryIdx]
@@ -199,6 +206,13 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
 /**
  * Custom hook for accessing the StoryContext.
  */
-const useStory = () => useContext(storyContext);
+const useStory = () => {
+    const context = useContext(storyContext);
+
+    if (!context) {
+        throw new Error("useStory must be used within a StoryProvider");
+    }
+    return context;
+};
 
 export { StoryProvider, useStory };

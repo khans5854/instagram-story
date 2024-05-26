@@ -29,6 +29,7 @@ export const StoryPreview = () => {
     if (!isOpen) {
         return null;
     }
+
     return (
         <div className="fixed left-0 top-0 h-[100vh] w-[100vw] z-10 bg-white">
             <div className="fixed left-0 top-0">

@@ -19,6 +19,7 @@ interface StoryProps {
 
 export const Story: React.FC<StoryProps> = ({ storyItem }) => {
     const { users } = storyItem;
+
     return (
         <StoryProvider storyItem={storyItem}>
             <StoryHeader users={users} />

@@ -16,6 +16,7 @@ interface StoryHeaderProps {
 
 export const StoryHeader: React.FC<StoryHeaderProps> = ({ users }) => {
     const { handleOpen } = useStory();
+
     return (
         <div className="flex flex-column gap-2 w-full overflow-auto no-scrollbar">
             {users.map(({ profileUrl, name }, index) => (
