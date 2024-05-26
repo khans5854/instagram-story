@@ -132,9 +132,11 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
         }
     }, [currentStoryIdx, setOpen, setCurrentStoryIdx, open, storyItem.users]);
 
+
     const handleImageLoad = useCallback(() => {
         setCurrentStoryLoaded(true);
     }, []);
+
 
     useEffect(
         () => setCurrentStoryLoaded(false),
