@@ -23,12 +23,14 @@ interface IStoryContextProps {
  */
 type StoryContextType = {
     isOpen: boolean;
+    currentStroyLoaded: boolean;
     handleOpen: (idx: number) => void;
     handleClose: () => void;
     currentUser: IUser | null;
     currentStoryIdx: number;
     handleNextStory: () => void;
     handlePrevStory: () => void;
+    handleImageLoad: () => void;
 };
 
 /**
@@ -36,12 +38,14 @@ type StoryContextType = {
  */
 const initialValue: StoryContextType = {
     isOpen: false,
+    currentStroyLoaded: false,
     handleOpen: () => {},
     handleClose: () => {},
     currentUser: null,
     currentStoryIdx: 0,
     handleNextStory: () => {},
     handlePrevStory: () => {},
+    handleImageLoad: () => {},
 };
 
 /**
@@ -59,6 +63,8 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
     const [open, setOpen] = useState<number>(-1);
     const [currentStoryIdx, setCurrentStoryIdx] = useState<number>(0);
 
+    const [currentStroyLoaded, setCurrentStoryLoaded] =
+        useState<boolean>(false);
     /**
      * Opens the story at the specified index.
      * @param idx - The index of the story to open.
@@ -126,17 +132,27 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
         }
     }, [currentStoryIdx, setOpen, setCurrentStoryIdx, open, storyItem.users]);
 
+    const handleImageLoad = useCallback(() => {
+        setCurrentStoryLoaded(true);
+    }, []);
+
+    useEffect(
+        () => setCurrentStoryLoaded(false),
+        [currentUser, currentStoryIdx]
+    );
+
     /**
      * Sets up a timer to automatically advance to the next story.
      */
     useEffect(() => {
+        if (!currentStroyLoaded) return;
         const timer = setInterval(
             handleNextStory,
             currentUser?.stories[currentStoryIdx].duration ??
                 DEFAULT_STORY_DURATION * 1000
         );
         return () => clearInterval(timer);
-    }, [handleNextStory, currentUser, currentStoryIdx]);
+    }, [handleNextStory, currentUser, currentStoryIdx, currentStroyLoaded]);
 
     /**
      * Resets the current story index when the story is closed.
@@ -151,21 +167,25 @@ const StoryProvider: React.FC<PropsWithChildren<IStoryContextProps>> = ({
     const value = useMemo(
         () => ({
             isOpen,
+            currentStroyLoaded,
             handleOpen,
             handleClose,
             currentUser,
             currentStoryIdx,
             handleNextStory,
             handlePrevStory,
+            handleImageLoad,
         }),
         [
             isOpen,
+            currentStroyLoaded,
             handleOpen,
             handleClose,
             currentUser,
             currentStoryIdx,
             handleNextStory,
             handlePrevStory,
+            handleImageLoad,
         ]
     );
 

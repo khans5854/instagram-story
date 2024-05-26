@@ -74,6 +74,7 @@ const STORY_ITEMS: IStoryItem = {
 };
 
 async function getStory() {
+    // we can write the logic to fetch the data from the server
     return STORY_ITEMS;
 }
 
