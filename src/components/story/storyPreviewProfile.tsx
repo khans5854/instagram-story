@@ -29,6 +29,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
                         src={profileUrl}
                         alt={name}
                         className="rounded-full"
+                        priority
                     />
                 </div>
                 <div>

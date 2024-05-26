@@ -30,6 +30,7 @@ export const StoryHeader: React.FC<StoryHeaderProps> = ({ users }) => {
                                 src={profileUrl}
                                 alt="profile-pic"
                                 className="rounded-full"
+                                priority
                             />
                         </div>
                     </Button>

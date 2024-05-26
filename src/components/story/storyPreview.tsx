@@ -42,6 +42,7 @@ export const StoryPreview = () => {
                     src={stories[currentStoryIdx].storyUrl}
                     alt="story"
                     className="brightness-90"
+                    priority
                 />
                 <Button
                     variant="ghost"
